@@ -15,8 +15,13 @@ const serpmeKahvalti = {isim: "Serpme Kahvaltı", fiyat: 16, kategori:"Kahvaltı
 */
 
 
-function MenuElemaniOlustur(/*Kodlar buraya*/){
+function MenuElemaniOlustur(adi,fiyati,kategorisi){
 	/*Kodlar buraya*/
+	const cay ={};
+	cay["isim"] =adi;
+	cay["fiyat"] =fiyati;
+	cay.kategori =kategorisi;
+return cay;
 }
 
 
@@ -34,7 +39,8 @@ function MenuElemaniOlustur(/*Kodlar buraya*/){
 
 
 /* Görev 2: 
-	Özel bir öğle yemeği yiyorsun! Öğretmen ve öğrencilere %25, diğer kişilere %10 indirim var. Aşağıdaki burger nesnesine, indirimi fiyatı otomatik olarak hesaplayan bir metot ekleyin.
+	Özel bir öğle yemeği yiyorsun! Öğretmen ve öğrencilere %25, diğer kişilere %10 indirim var. Aşağıdaki burger nesnesine, 
+	indirimi fiyatı otomatik olarak hesaplayan bir metot ekleyin.
 	
 	burger nesnesine aşağıdakileri uygulayın:
 	1. burger nesnesine adı indirim olan bir metot ekleyin
@@ -50,9 +56,20 @@ const burger = {
 	isim: "Burger", 
 	fiyat: 18, 
 	kategori: "Öğle Yemeği", 
-
+	indirim: function (kisi){
+		
+		if(kisi === "öğretmen" || kisi === "öğrenci")
+		{
+			return(this.fiyat * 0.75); 
+		}else if(kisi === "diğer"){
+			return(this.fiyat * 0.9); 
+	
+		}
+		
+	}
 }
 
+console.log(burger.indirim('öğretmen'));
 
 
 ///////////////Değerlendirmeler (MVP)///////////////////
@@ -71,7 +88,8 @@ const degerlendirmeler = [
 	Yukarıdaki degerlendirmeler dizisini(array) kullanarak:
 	1. Sadece Ahmet'in geribildirimini konsolda görüntüleyin - fonksiyona gerek yok
 */
-
+	
+	console.log(degerlendirmeler[5].geribildirim);
 
 
 /*  Görev 4 (ototest yok):  
@@ -79,6 +97,8 @@ const degerlendirmeler = [
 	1. Bu geribildirimi Reyna'nın değerlendirmesine ekleyin - "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım"
 	2. degerlendirmeler dizisini konsolda görüntüleyerek çalışmanızı kontrol edin
 */
+	degerlendirmeler[7].geribildirim="bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım";
+	console.log(degerlendirmeler[7].geribildirim);
 
 
 
@@ -94,9 +114,10 @@ const degerlendirmeler = [
 */
 
 
-function DegerledirmeEkle(/*Kodlar buraya */){
+function DegerledirmeEkle(dgr,isim2,puan2,geribildirim2){
 	/*Kodlar buraya */
-	
+	dgr.push({isim:isim2,puan:puan2,geribildirim:geribildirim2});
+	return dgr;
 }
 
 
@@ -112,11 +133,13 @@ function DegerledirmeEkle(/*Kodlar buraya */){
 */
 
 
-function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
+function AnahtardanDegerlendirmeAl(dgr,index) {
 	/*Kodlar buraya*/
-
+	const alinanDeger = dgr[index];
+	const sonuc = alinanDeger.isim + " isimli kişi "+alinanDeger.puan+" puan verdi ve şunları yazdı: "+alinanDeger.geribildirim;
+	return sonuc;
 }
-
+console.log(AnahtardanDegerlendirmeAl(degerlendirmeler,1));
 
 
 /*  Görev 7:  
@@ -132,10 +155,12 @@ function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
 */
 
 
-function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
+function SonDegerlendirmeyiAl(dgr) {
 	/*Kodlar buraya*/
+	const sonuc = dgr[dgr.length-1];
+	return sonuc.isim +" isimli kişi " + sonuc.puan +" puan verdi ve şunları yazdı: "+ sonuc.geribildirim;
 } 
-
+console.log(SonDegerlendirmeyiAl(degerlendirmeler));
 
 
 /////////////// BONUS  GÖRVLER////////////////////
@@ -154,11 +179,19 @@ function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
 	]
 */
 
-function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
+function PuanaGoreDegerlendirmeAl(dgr,puani) {
     /* Kodlar buraya */
+	 const puanaGoreAl =[];
+	for(let i in dgr){
+		if(dgr[i].puan>=puani && dgr[i].puan<5){
+			puanaGoreAl.push(dgr[i]);
+		}	
+
+	}
+	return puanaGoreAl;
 }
 
-
+console.log(PuanaGoreDegerlendirmeAl(degerlendirmeler,4));
 /*  BONUS 2:    
 	UzunDegerlendirmeleriAl fonksiyonuna aşağıdakileri uygulayın:
 	1. Tüm değerlendirmeleri içeren diziyi alacak
@@ -166,17 +199,28 @@ function PuanaGoreDegerlendirmeAl(/* Kodlar buraya */) {
 	
 */
 
-function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
+function UzunDegerlendirmeleriAl(dgr) {
     /* Kodlar buraya */
+	const tumDegerler =[];
+	for(let i in dgr){
+		if(dgr[i].geribildirim.split(" ").length>15){
+			tumDegerler.push(dgr[i]);
+		}	
+
+	}
+	return tumDegerler;
+
 }
-
-
+console.log("buradan sonra bak ");
+console.log(UzunDegerlendirmeleriAl(degerlendirmeler));
 /*  BONUS 3:  
 	Bu ek görevde degerlendirmeler dizisi kullanılmayacak!  Bu görevde kendi nesnenizi yaratmanız gerekmektedir.
 	
 	arabaYapici fonksiyonunu kullanarak aşağıdakileri uygulayın:
 	1. Kilometre sayacı olarak kullanılacak (kaç kilometre yol gittiğini sayacak) bir değişkeni parametre olarak alacak
+
 	2. Nesnenin içine kilometre sayacını artıracak bir sürüş metodu ekleyin
+
 	3. Nesneyi döndürün
 	4. Döndürülen nesnedeki kilometre sayacı şu özellikleri taşımalı:
 	a. Sürüş metodu ne zaman, nerden çağırılırsa çağırılsın mutlaka parametre olarak bir mesafe(km) alacak
@@ -189,11 +233,27 @@ function UzunDegerlendirmeleriAl(/* Kodlar buraya */) {
 */
 
 
-function arabaYapici(/* Kodlar buraya */) {
+function arabaYapici(km) {
     /* Kodlar buraya */
-    
-}
+	// const araba = [
+	// 	{marka: "BMW", model: "i3",km: 10, kmSayaci: function () {0}},
 
+	// 	{marka: "Mercedes", model: "C180", kmSayaci: function () {0}},
+	// ]
+	const araba = {
+		arabaAdi: 'BMW i3',
+		kmSayac: 10,
+		surus: function(kmMiktar){
+			this.kmSayac +=kmMiktar;
+			return km.kmSayac;
+		}
+	};
+	araba.surus(km);
+	console.log(araba);
+    return araba;
+}
+console.log("bundan sonra bak");
+arabaYapici(100);
 
 /*  Buradan aşağıdaki kodları değiştirmeyin lütfen */
 function sa(){
